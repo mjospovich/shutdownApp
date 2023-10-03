@@ -15,7 +15,7 @@ class ShutdownController:
   #* destructor
   def __del__(self):
     # comment this out later
-    print("removing the call...")
+    print("shutting down the program...")
     sleep(1)
     #subprocess.call("shutdown -a -fw")
     pass
@@ -26,7 +26,7 @@ class ShutdownController:
     self.call = self.command + " /s " + self.params
 
     print(f"{self.call}")
-    #subprocess.run(self.call)
+    subprocess.run(self.call)
   
   #* for restart
   def restart(self, *kwargs):
@@ -34,7 +34,7 @@ class ShutdownController:
     self.call = self.command + " /r " + self.params
 
     print(f"{self.call}")
-    #subprocess.run(self.call)
+    subprocess.run(self.call)
   
   #* for logging off
   def logoff(self, *kwargs):
@@ -42,14 +42,14 @@ class ShutdownController:
     self.call = self.command + " /l " + self.params
 
     print(f"{self.call}")
-    #subprocess.run(self.call)
+    subprocess.run(self.call)
 
   #* for aborting command
   def abort(self):
     self.call = self.command + " /a"
 
     print(f"{self.call}")
-    #subprocess.run(self.call)
+    subprocess.run(self.call)
 
 #* ui class which serves as menu
 class UserInterface:
@@ -87,7 +87,6 @@ class UserInterface:
       print(choice)
 
       if choice not in (4, 5):
-        
         self.isTimed = self.checkOption("Do you want to set a time delay")
         if self.isTimed:
           self.time = str(input("Enter the time delay (in seconds): "))
