@@ -44,6 +44,12 @@ class ShutdownController:
     print(f"{self.call}")
     #subprocess.run(self.call)
 
+  #* for aborting command
+  def abort(self):
+    self.call = self.command + " /a"
+
+    print(f"{self.call}")
+    #subprocess.run(self.call)
 
 #* ui class which serves as menu
 class UserInterface:
@@ -55,7 +61,7 @@ class UserInterface:
     self.withMsg = False # "/c"
     self.message = ""
     self.exit = False
-    self.commands = ["shutdown", "restart", "logoff", "quit"]
+    self.commands = ["shutdown", "restart", "logoff", "abort", "quit"]
     self.params = []
 
   def print_menu(self):
@@ -67,7 +73,7 @@ class UserInterface:
       print("   ", num+1, val.title())
 
   def checkOption(self, message) -> bool:
-    return True if input(f"{message} (Y/N)?") in "YyYesyes" else False
+    return True if input(f"{message} (Y/N)? ") in "YyYesyes" else False
 
   #* app mainloop
   def run(self):
@@ -80,7 +86,7 @@ class UserInterface:
       choice = int(input(">>> Enter your choice: "))
       print(choice)
 
-      if choice != 4:
+      if choice not in (4, 5):
         
         self.isTimed = self.checkOption("Do you want to set a time delay")
         if self.isTimed:
@@ -105,6 +111,9 @@ class UserInterface:
         call.logoff(*self.params)
         pass
       elif choice == 4:
+        call.abort()
+        pass
+      elif choice == 5:
         self.exit = True
       else:
         "Choose again!"
